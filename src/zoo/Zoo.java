@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 public class Zoo {
 
     public static void main(String[] args) { //-----------------------------------MAIN----------------------------------------
-        
+
         boolean continuar = true;// Para poder seguir seleccionando opciones
 
         while (continuar) {
@@ -21,36 +21,31 @@ public class Zoo {
                     AnimalsComing menuDeAnimales = new AnimalsComing();
                     menuDeAnimales.PrecargarAnimales(); // SE NECSITA PRECARGAR DESDE MAIN XQ NO HAY CONSTRUCTOR DENTRO DE LA CLASE
                     menuDeAnimales.MenuAnimals();
-                    
-                    
-                    
+
                     break;
                 case 1:
                     // Lógica para Registro de Hábitats
                     JOptionPane.showMessageDialog(null, "Seleccionaste Registro de Hábitats");
                     break;
                 case 2: {
-                    String[] opcionRegistroEventos = {"Registrar nuevo evento", "Consultar información de evento", "Crear archivo de registro de eventos"};
+                    String[] opcionRegistroEventos = {"Registrar nuevo evento", "Consultar información de evento"};
                     int opcionSeleccionadaRegistroEventos = JOptionPane.showOptionDialog(null, "Seleccione una opción:", "------Menú de eventos------", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcionRegistroEventos, opcionRegistroEventos[0]);
+                    RegistroEventos registroEventos = RegistroEventos.obtenerInstancia(); // Obtener la instancia única
+
                     switch (opcionSeleccionadaRegistroEventos) {
                         case 0: {
-                            String nombreEvento = JOptionPane.showInputDialog("Ingrese el nombre del evento:");
-                            String fechaEvento = JOptionPane.showInputDialog("Ingrese la fecha del evento:");
-                            String descripcionEvento = JOptionPane.showInputDialog("Ingrese la descripción del evento:");
-                            String codigoEvento = JOptionPane.showInputDialog("Ingrese el codigo del evento:");
-                            RegistroEventos registroEventos = new RegistroEventos(); // nuevo objeto de evento
-                            registroEventos.registrarEvento(nombreEvento, fechaEvento, descripcionEvento, codigoEvento);
+                            registroEventos.detallarEvento();
+                            registroEventos.imprimirEventos();//Para uso de nosotros-------- Borrar en el proyecto final---------
                             JOptionPane.showMessageDialog(null, "Evento registrado con éxito.");
                             break OUTER;
                         }
                         case 1: {
-                            String codigoEvento = JOptionPane.showInputDialog("Ingrese el codigo del evento que desea consultar:");
-                            RegistroEventos consultaRegistroEventos = new RegistroEventos(); // Crear una instancia de la clase RegistroEventos pero para consultas nada mas
-                            String informacionEvento = consultaRegistroEventos.consultarEventoPorCodigo(codigoEvento);
+                            String codigoEvento = JOptionPane.showInputDialog("Ingrese el código del evento que desea consultar:");
+                            String informacionEvento = registroEventos.consultarEventoPorCodigo(codigoEvento);
+                            registroEventos.imprimirEventos();//Para uso de nosotros-------- Borrar en el proyecto final---------
                             JOptionPane.showMessageDialog(null, informacionEvento);
                             break OUTER;
                         }
-
                         default:
                             JOptionPane.showMessageDialog(null, "Opción no válida");
                             break OUTER;
